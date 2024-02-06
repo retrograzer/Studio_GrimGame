@@ -12,9 +12,9 @@ public class PointToMouse2D : MonoBehaviour
 		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-		if (Input.GetMouseButtonDown(2))
-		{
-			Debug.Log("Dir: " + dir);
-		}
+		//if (Input.GetMouseButtonDown(2))
+		//{
+		//	Debug.DrawLine(transform.position, dir, Color.white, 2f);
+		//}
 	}
 }
