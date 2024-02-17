@@ -13,9 +13,15 @@ public class FPS_Counter : MonoBehaviour
 
     public TextMeshProUGUI counter;
     public bool displayFPS = false;
+
     private void Start()
     {
         displayFPS = false;
+    }
+
+    public void ChangeDisplayStatus ()
+    {
+        displayFPS = !displayFPS;
     }
 
     void Update()
@@ -42,10 +48,10 @@ public class FPS_Counter : MonoBehaviour
             counter.text = "";
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            displayFPS = !displayFPS;
-        }
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    displayFPS = !displayFPS;
+        //}
     }
 
 }

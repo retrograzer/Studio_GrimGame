@@ -11,6 +11,7 @@ public class ShopBehavior : MonoBehaviour
     public Transform buttonLayoutGroup;
     public int maxSpawnedUpgrades = 2;
 
+    [HideInInspector] public int soulsDeposited = 0;
     bool inTrigger = false;
     bool menuActive = false;
     ComponentToggler ct;
@@ -83,5 +84,10 @@ public class ShopBehavior : MonoBehaviour
             inTrigger = false;
             indicator.SetActive(false);
         }
+    }
+
+    public void AddDepositedSouls (int soulsToAdd)
+    {
+        soulsDeposited += soulsToAdd;
     }
 }

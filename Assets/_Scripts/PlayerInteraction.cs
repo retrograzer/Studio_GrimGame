@@ -25,10 +25,20 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.tag == "SoulPickup")
         {
             Destroy(collision.gameObject);
-            soulsHeld++;
-            pui.soulsHeldText.text = "Souls: " + soulsHeld;
-            fx.Play();
+            PickupSoul(1);
         }
+    }
+
+    public void PickupSoul (int soulsGained)
+    {
+        soulsHeld += soulsGained;
+        pui.soulsHeldText.text = "Souls: " + soulsHeld;
+        fx.Play();
+    }
+
+    public void DepositSoulsFX (int soulsRemoved)
+    {
+        soulsHeld -= soulsRemoved;
     }
 
     public void ApplySlowEffect ()

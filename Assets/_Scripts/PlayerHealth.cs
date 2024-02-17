@@ -34,13 +34,19 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            LoseLife();
+            LoseLife(1);
         }
     }
 
-    void LoseLife()
+    public void AddLife (int livesAdded)
     {
-        currentLives--;
+        currentLives += livesAdded;
+        pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+    }
+
+    public void LoseLife(int livesLost)
+    {
+        currentLives -= livesLost;
         currentHealth = maxHealth;
         pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
 
