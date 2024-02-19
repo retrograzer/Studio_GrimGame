@@ -28,6 +28,8 @@ public class MeleeEnemy : MonoBehaviour
 
     void Attack()
     {
+        // attack animation trigger goes here
+
         // if player within attack range, decrease player health
         if (Vector3.Distance(transform.position, player.position) < attackRange)
         {
