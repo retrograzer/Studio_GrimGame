@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class RangedEnemy : MonoBehaviour
 {
+    [Header("Movement")]
     public float speed = 2.0f; // change movespeed
     public float attackRange = 50f; // change attack range
+
+    [Header("Projectile")]
+    public float attackRate = .5f;
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float projectileSpeed = 5f; // change projectile speed
 
     private Transform player;
+    private float attackCooldown = 0f;
 
     void Start()
     {
@@ -19,10 +24,14 @@ public class RangedEnemy : MonoBehaviour
 
     void Update()
     {
+        if (attackCooldown > 0)
+            attackCooldown -= Time.deltaTime;
+
         if (Vector3.Distance(transform.position, player.position) < 200) // aggro range here - adjust as needed
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, player.position) < attackRange)
+
+            if (Vector3.Distance(transform.position, player.position) < attackRange && attackCooldown <= 0)
             {
                 Attack();
             }
@@ -37,5 +46,8 @@ public class RangedEnemy : MonoBehaviour
         projectile.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
 
         // attack animation trigger goes here
+
+        // reset attack cooldown
+        attackCooldown = attackRate;
     }
 }
