@@ -17,6 +17,7 @@ public class UpgradeButtonBehavior : MonoBehaviour
     PlayerHealth ph;
     PlayerAttack pa;
     PlayerMovement pm;
+    PlayerCrowAttack pca;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class UpgradeButtonBehavior : MonoBehaviour
         ph = player.GetComponent<PlayerHealth>();
         pa = player.GetComponent<PlayerAttack>();
         pm = player.GetComponent<PlayerMovement>();
+        pca = player.GetComponent<PlayerCrowAttack>();
     }
 
     public void AssignParent (ShopBehavior newParent)
@@ -36,10 +38,13 @@ public class UpgradeButtonBehavior : MonoBehaviour
         switch (upgrade)
         {
             case UpgradeType.speed:
+                pm.moveSpeed *= 1.1f;
                 break;
             case UpgradeType.lives:
+                ph.AddLife(1);
                 break;
             case UpgradeType.crows:
+                pca.AddCrows(1);
                 break;
         }
     }

@@ -53,6 +53,10 @@ public class PlayerAttack : MonoBehaviour
         if (scytheRay.collider)
         {
             Debug.Log("Hit " + scytheRay.collider);
+            if (scytheRay.collider.tag == "Enemy")
+            {
+                scytheRay.collider.GetComponent<EnemyHealth>().TakeDamage(1);
+            }
         }
 
         //Set the line renderers for debugging

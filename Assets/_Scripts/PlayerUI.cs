@@ -7,6 +7,7 @@ public class PlayerUI : MonoBehaviour
 {
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI soulsHeldText;
+    public GameObject gameOverCanvas;
 
     public void UpdateUI ()
     {

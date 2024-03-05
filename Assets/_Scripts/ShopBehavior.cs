@@ -17,6 +17,7 @@ public class ShopBehavior : MonoBehaviour
     ComponentToggler ct;
     Object[] allUpgrades;
     List<GameObject> spawnedButtons = new List<GameObject>();
+    bool refreshOnOpen = true;
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class ShopBehavior : MonoBehaviour
     void Start()
     {
         ct = GameObject.FindGameObjectWithTag("Player").GetComponent<ComponentToggler>();
-        RefreshShopOptions();
+        //RefreshShopOptions();
     }
 
     void Update()
@@ -34,6 +35,11 @@ public class ShopBehavior : MonoBehaviour
         if (inTrigger && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)))
         {
             ToggleMenu();
+            if (refreshOnOpen)
+            {
+                RefreshShopOptions();
+                refreshOnOpen = false;
+            }
         }
         if (Input.GetKeyDown(KeyCode.I))
             RefreshShopOptions();

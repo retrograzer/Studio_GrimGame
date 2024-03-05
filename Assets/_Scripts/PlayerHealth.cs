@@ -70,6 +70,9 @@ public class PlayerHealth : MonoBehaviour
     //TODO
     void Die()
     {
+        GetComponent<ComponentToggler>().ToggleComponents(false);
+        pui.gameOverCanvas.SetActive(true);
+        Destroy(gameObject);
         Debug.Log("End Game");
     }
 }

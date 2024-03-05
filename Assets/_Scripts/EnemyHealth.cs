@@ -5,6 +5,10 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 3;
+    public GameObject soulDropPrefab;
+    public Vector2 deathExplosionForce = new Vector2(-2, 2);
+    public bool overrideSoulsDropped = true;
+    public int soulsDroppedOV = 5;
 
     int currentHealth = 3;
 
@@ -32,6 +36,17 @@ public class EnemyHealth : MonoBehaviour
 
     void Die ()
     {
+        int soulNum = maxHealth;
+
+        if (overrideSoulsDropped)
+            soulNum = soulsDroppedOV;
+
+        for (int i = 0; i < soulsDroppedOV; i++)
+        {
+            GameObject newPickup = Instantiate(soulDropPrefab, transform.position, Quaternion.identity);
+            newPickup.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
+        }
+
         Destroy(gameObject);
     }
 }
