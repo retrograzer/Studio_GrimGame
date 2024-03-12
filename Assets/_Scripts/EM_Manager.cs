@@ -15,6 +15,7 @@ public class EM_Manager : MonoBehaviour
     public float[] enemyRampUp = { 50f, 100f };
     public bool restartOnEscape = true;
     public bool spawnOnStart = true;
+    public Transform enemyBox;
 
     List<GameObject> allSpawnedEnemies = new List<GameObject>();
     Transform[] allSpawnPoints = new Transform[2];
@@ -85,6 +86,11 @@ public class EM_Manager : MonoBehaviour
             }
             allSpawnedEnemies.Add(newClone);
         }
+
+        //Put all the enemies under one parent to keep my heirarchy sane
+        foreach (GameObject index in allSpawnedEnemies)
+            index.transform.SetParent(enemyBox);
+
         yield return new WaitForEndOfFrame();
     }
 
@@ -105,11 +111,11 @@ public class EM_Manager : MonoBehaviour
         if (dist < enemyRampUp[0]) //0-50
             return 0;
         else if (dist < enemyRampUp[1]) //50-100
-            return 1;
-        //return Random.Range(0, 2);
+            //return 1;
+            return Random.Range(0, 2);
         else //100+
-            return 2;
-            //return Random.Range(0, 4);
+            //return 2;
+            return Random.Range(0, 4);
     }
 
     public void RestartEndlessMode ()

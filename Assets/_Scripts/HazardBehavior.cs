@@ -71,6 +71,7 @@ public class HazardBehavior : MonoBehaviour
             case EffectType.water:
                 break;
             case EffectType.fire:
+                eh.TakeDamage(1);
                 break;
         }
     }
