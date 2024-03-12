@@ -1,98 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EM_Manager : MonoBehaviour
 {
-    public GameObject[] enemies;
-    public int waveNum = 0;
-    public float waveDelay = 3f;
-    public TextMeshProUGUI waveText, enemyCountText;
-    public GameObject gemCrate;
-    public GameObject heartCrate;
+    public Transform enemySpawnParent;
+    public List<GameObject> allEnemyPrefabs = new List<GameObject>();
+    public int enemiesSpawned = 40;
+    public float safeZoneRadius = 10f;
+    public float[] enemyRampUp = { 50f, 100f };
+    public bool restartOnEscape = true;
+    public bool spawnOnStart = true;
 
-    GameObject[] spawnPointList;
-    GameObject[] gemSpawnList;
-    GameObject[] heartSpawnList;
-    int enemiesRemaining = 100;
-    float cooldown = 0f;
-    int enemyCountPerWave = 25;
+    List<GameObject> allSpawnedEnemies = new List<GameObject>();
+    Transform[] allSpawnPoints = new Transform[2];
+    Transform depositDoor;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        spawnPointList = GameObject.FindGameObjectsWithTag("CollSpawnPoint");
-        gemSpawnList = GameObject.FindGameObjectsWithTag("GCrateSpawn");
-        heartSpawnList = GameObject.FindGameObjectsWithTag("HCrateSpawn");
-        Debug.Log("Spawn List: " + spawnPointList.ToString());
-        StartWave();
-        SpawnPickups();
+        allSpawnPoints[0] = enemySpawnParent.GetChild(0);
+        allSpawnPoints[1] = enemySpawnParent.GetChild(1);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(0);
+        depositDoor = GameObject.FindGameObjectWithTag("Finish").GetComponent<Transform>();
+        
+        if (spawnOnStart)
+            StartRefreshEnemies();
     }
 
-    public void StartWave()
+    private void Update()
     {
-        enemiesRemaining = enemyCountPerWave;
-        enemyCountText.text = "Enemies " + enemiesRemaining;
-        StartCoroutine(StartDelay());
-    }
-
-    IEnumerator StartDelay()
-    {
-        yield return new WaitForSeconds(waveDelay);
-        SpawnEnemies();
-        if (waveNum % 10 == 0 && waveNum != 0)
-            SpawnPickups();
-        WaveTickCount();
-    }
-
-    void SpawnEnemies()
-    {
-        for (int i = 0; i < enemyCountPerWave; i++)
+        if (Input.GetKeyDown(KeyCode.Escape) && restartOnEscape)
         {
-            GameObject clone = Instantiate(enemies[0], spawnPointList[Random.Range(0, spawnPointList.Length - 1)].transform.position, Quaternion.identity);
+            RestartEndlessMode();
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            StartRefreshEnemies();
         }
     }
 
-    void SpawnPickups()
+    public void DestroyAllEnemies ()
     {
-        foreach (GameObject index in gemSpawnList)
+        foreach (GameObject index in allSpawnedEnemies)
         {
-            GameObject gemClone = Instantiate(gemCrate, index.transform.position, Quaternion.identity);
+            Destroy(index);
         }
-
-        foreach (GameObject gindex in heartSpawnList)
-        {
-            GameObject heartClone = Instantiate(heartCrate, gindex.transform.position, Quaternion.identity);
-        }
+        allSpawnedEnemies.Clear();
     }
 
-    void WaveTickCount()
+    public void StartRefreshEnemies()
     {
-        waveNum++;
-        waveText.text = "Wave " + waveNum;
-        enemyCountPerWave += 5;
+        StartCoroutine(RefreshEnemies());
     }
 
-    public void EnemyDestroyed()
+    IEnumerator RefreshEnemies ()
     {
-        enemiesRemaining--;
-        Debug.Log("ER: " + enemiesRemaining);
-        enemyCountText.text = "Enemies " + enemiesRemaining;
-        if (enemiesRemaining <= 0)
+        //Clear out old list and enemies
+        DestroyAllEnemies();
+
+        //Spawn all new enemies
+        for (int i = 0; i < enemiesSpawned; i++)
         {
-            Debug.Log("New Wave");
-            StartWave();
+            Vector2 spawnPos = new Vector2( 0, 0 );
+            do
+            {
+                float spawnX = Random.Range(allSpawnPoints[0].position.x, allSpawnPoints[1].position.x);
+                float spawnY = Random.Range(allSpawnPoints[0].position.y, allSpawnPoints[1].position.y);
+                spawnPos = new Vector2(spawnX, spawnY);
+            } while (IsVectorOutsideSafeZone(spawnPos) == true);
+
+
+            GameObject newClone = Instantiate(allEnemyPrefabs[GetEnemyBasedOnRange(spawnPos)], spawnPos, Quaternion.identity);
+            if (i % 10 == 0)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            allSpawnedEnemies.Add(newClone);
         }
+        yield return new WaitForEndOfFrame();
+    }
+
+    bool IsVectorOutsideSafeZone (Vector2 potential)
+    {
+        return potential.x >= depositDoor.position.x - safeZoneRadius && potential.x <= depositDoor.position.x + safeZoneRadius
+               && potential.y >= depositDoor.position.y - safeZoneRadius && potential.y <= depositDoor.position.y + safeZoneRadius;
+    }
+
+    /// <summary>
+    /// Get enemy int based on range from deposit door. Called from RefreshEnemies
+    /// </summary>
+    /// <param name="spawnPointIndex">Which spawn point am I looking at?</param>
+    /// <returns></returns>
+    int GetEnemyBasedOnRange (Vector2 spawnPos)
+    {
+        float dist = Vector2.Distance(depositDoor.position, spawnPos);
+        if (dist < enemyRampUp[0]) //0-50
+            return 0;
+        else if (dist < enemyRampUp[1]) //50-100
+            return 1;
+        //return Random.Range(0, 2);
+        else //100+
+            return 2;
+            //return Random.Range(0, 4);
     }
 
     public void RestartEndlessMode ()

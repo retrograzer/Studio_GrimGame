@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 7788473216112452329}
   - component: {fileID: 1678420615920066585}
   - component: {fileID: 1074332511996436772}
-  - component: {fileID: 336649262793881436}
   m_Layer: 6
   m_Name: Enemy_Accepting
   m_TagString: Enemy
@@ -133,6 +132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  soulDropPrefab: {fileID: 6673580848335216360, guid: a707b350dce8f4246b478a31392e47ae, type: 3}
+  deathExplosionForce: {x: -2, y: 2}
+  overrideSoulsDropped: 1
+  soulsDroppedOV: 5
 --- !u!58 &1678420615920066585
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -195,16 +198,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &336649262793881436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6856665805493907757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00480fe4e0e09e1449f56f40209e5123, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2

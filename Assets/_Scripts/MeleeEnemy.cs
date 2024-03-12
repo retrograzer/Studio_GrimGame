@@ -16,6 +16,7 @@ public class MeleeEnemy : MonoBehaviour
     private Transform player;
     private PlayerHealth ph;
     private float attackCooldown = 0f;
+    private bool isAggroed = false;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class MeleeEnemy : MonoBehaviour
         ph = player.GetComponent<PlayerHealth>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
@@ -31,8 +32,9 @@ public class MeleeEnemy : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
 
         // if player comes within 100 units, enemy faces player and moves towards player and call attack method
-        if (dist < aggroRange) // change aggro range
+        if (dist < aggroRange || isAggroed) // change aggro range
         {
+            isAggroed = true;
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
 
             if (dist < attackRange && attackCooldown <= 0)

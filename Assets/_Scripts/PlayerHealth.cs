@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
 
     bool isInvincible = false;
     PlayerUI pui;
+    EM_Manager manager;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<EM_Manager>();
         currentHealth = maxHealth;
         currentLives = 3;
     }
@@ -70,6 +72,7 @@ public class PlayerHealth : MonoBehaviour
     //TODO
     void Die()
     {
+        manager.DestroyAllEnemies();
         GetComponent<ComponentToggler>().ToggleComponents(false);
         pui.gameOverCanvas.SetActive(true);
         Destroy(gameObject);

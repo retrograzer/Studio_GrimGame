@@ -133,6 +133,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  soulDropPrefab: {fileID: 0}
+  deathExplosionForce: {x: -2, y: 2}
+  overrideSoulsDropped: 1
+  soulsDroppedOV: 5
 --- !u!58 &5897248583269108643
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -208,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
-  attackRange: 2
-  aggroRange: 100
+  attackRange: 1.5
+  aggroRange: 10
   attackDamage: 1
   attackRate: 0.5

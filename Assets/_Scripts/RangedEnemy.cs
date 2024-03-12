@@ -7,6 +7,7 @@ public class RangedEnemy : MonoBehaviour
     [Header("Movement")]
     public float speed = 2.0f; // change movespeed
     public float attackRange = 50f; // change attack range
+    public float aggroRange = 10f;
 
     [Header("Projectile")]
     public float attackRate = .5f;
@@ -27,7 +28,7 @@ public class RangedEnemy : MonoBehaviour
         if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
 
-        if (Vector3.Distance(transform.position, player.position) < 200) // aggro range here - adjust as needed
+        if (Vector3.Distance(transform.position, player.position) < aggroRange) // aggro range here - adjust as needed
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
 
