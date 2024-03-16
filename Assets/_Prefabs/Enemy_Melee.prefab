@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3eb666caf049a842960cfea1cb515d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 4
   soulDropPrefab: {fileID: 6673580848335216360, guid: a707b350dce8f4246b478a31392e47ae, type: 3}
   deathExplosionForce: {x: -2, y: 2}
   overrideSoulsDropped: 1

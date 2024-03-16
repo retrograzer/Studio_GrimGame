@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using TMPro;
 using UnityEngine;
 
 public class ShopBehavior : MonoBehaviour
@@ -10,8 +11,12 @@ public class ShopBehavior : MonoBehaviour
     public GameObject indicator;
     public Transform buttonLayoutGroup;
     public int maxSpawnedUpgrades = 2;
+    public TextMeshProUGUI shopSoulsNum;
+    public TextMeshProUGUI warningText;
+    public TextMeshPro depositDoorNum;
 
     [HideInInspector] public int soulsDeposited = 0;
+
     bool inTrigger = false;
     bool menuActive = false;
     ComponentToggler ct;
@@ -69,6 +74,11 @@ public class ShopBehavior : MonoBehaviour
         }
     }
 
+    public bool CanBuyUpgrade (int upgradeCost)
+    {
+        return soulsDeposited - upgradeCost >= 0;
+    }
+
     public void BuyUpgrade ()
     {
         RefreshShopOptions();
@@ -95,5 +105,14 @@ public class ShopBehavior : MonoBehaviour
     public void AddDepositedSouls (int soulsToAdd)
     {
         soulsDeposited += soulsToAdd;
+        shopSoulsNum.text = "SOULS - " + soulsDeposited;
+        depositDoorNum.text = "" + soulsDeposited;
+    }
+
+    public IEnumerator FlashWarningText (string warning, float delay)
+    {
+        warningText.text = warning;
+        yield return new WaitForSeconds(delay);
+        warningText.text = "";
     }
 }
