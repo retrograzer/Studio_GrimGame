@@ -55,7 +55,7 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Hit " + scytheRay.collider);
             if (scytheRay.collider.tag == "Enemy")
             {
-                scytheRay.collider.GetComponent<EnemyHealth>().TakeDamage(1);
+                scytheRay.collider.GetComponent<EnemyHealth>().TakeDamage(1, transform.position);
             }
         }
 

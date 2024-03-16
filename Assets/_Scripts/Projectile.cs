@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             // inster damage logic here
-            collision.GetComponent<PlayerHealth>().TakeDamage(damage);
+            collision.GetComponent<PlayerHealth>().TakeDamage(damage, transform.position);
 
             Destroy(gameObject);
         }

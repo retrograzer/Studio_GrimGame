@@ -63,6 +63,6 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ApplyFireEffect ()
     {
-        ph.TakeDamage(1);
+        ph.TakeDamage(1, transform.position);
     }
 }

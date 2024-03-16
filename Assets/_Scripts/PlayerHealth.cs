@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 3;
     public Transform respawnPoint;
     public float invincibleTime = 1f;
+    public float hitForce = 2;
 
     int currentHealth = 3;
     int currentLives = 3;
@@ -15,10 +16,12 @@ public class PlayerHealth : MonoBehaviour
     bool isInvincible = false;
     PlayerUI pui;
     EM_Manager manager;
+    Rigidbody2D rbd;
 
     private void Awake()
     {
         pui = GetComponent<PlayerUI>();
+        rbd = GetComponent<Rigidbody2D>();
     }
 
     void Start()
@@ -28,11 +31,13 @@ public class PlayerHealth : MonoBehaviour
         currentLives = 3;
     }
 
-    public void TakeDamage (int damageTaken)
+    public void TakeDamage (int damageTaken, Vector2 dmgSrc)
     {
         StartCoroutine(InvincibleTimer());
         currentHealth -= damageTaken;
         pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+
+        rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
 
         if (currentHealth <= 0)
         {

@@ -9,13 +9,15 @@ public class EnemyHealth : MonoBehaviour
     public Vector2 deathExplosionForce = new Vector2(-2, 2);
     public bool overrideSoulsDropped = true;
     public int soulsDroppedOV = 5;
+    public float hitForce = 50f;
 
     int currentHealth = 3;
+    Rigidbody2D rbd;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        currentHealth = maxHealth;
+        rbd = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -24,9 +26,10 @@ public class EnemyHealth : MonoBehaviour
         
     }
 
-    public void TakeDamage (int damageTaken)
+    public void TakeDamage (int damageTaken, Vector2 dmgSrc)
     {
         currentHealth -= damageTaken;
+        rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
         
         if (currentHealth <= 0)
         {

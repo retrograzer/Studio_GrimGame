@@ -49,7 +49,7 @@ public class MeleeEnemy : MonoBehaviour
         // attack animation trigger goes here
 
         // if player within attack range, decrease player health
-        ph.TakeDamage(attackDamage);
+        ph.TakeDamage(attackDamage, transform.position);
 
         // reset attack cooldown
         attackCooldown = attackRate;

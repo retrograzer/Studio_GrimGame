@@ -37,7 +37,7 @@ public class EM_Console : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                playerGO.GetComponent<PlayerHealth>().TakeDamage(-1);
+                playerGO.GetComponent<PlayerHealth>().TakeDamage(-1, transform.position);
             }
             if (Input.GetKeyDown(KeyCode.O))
             {
