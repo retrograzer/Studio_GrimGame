@@ -308,5 +308,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnetized: 1
-  magnetizedByDistance: 0
+  magnetizedByDistance: 1
   magnetSpeed: 5

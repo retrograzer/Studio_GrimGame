@@ -131,11 +131,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3eb666caf049a842960cfea1cb515d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 2
   soulDropPrefab: {fileID: 6673580848335216360, guid: a707b350dce8f4246b478a31392e47ae, type: 3}
   deathExplosionForce: {x: -2, y: 2}
   overrideSoulsDropped: 1
   soulsDroppedOV: 1
+  hitForce: 1
 --- !u!58 &1678420615920066585
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -184,7 +185,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -197,4 +198,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
