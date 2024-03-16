@@ -6,6 +6,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     public int soulsHeld = 0;
     public ParticleSystem fx;
+    public GameObject soulPrefab;
 
     PlayerHealth ph;
     PlayerAttack pa;
@@ -26,6 +27,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             Destroy(collision.gameObject);
             PickupSoul(1);
+        }
+    }
+
+    public void DropAllSouls ()
+    {
+        for (int i = 0; i < soulsHeld; i++)
+        {
+            //TODO
         }
     }
 
