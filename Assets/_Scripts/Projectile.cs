@@ -21,6 +21,12 @@ public class Projectile : MonoBehaviour
         Invoke("EnableCollision", 1f);
     }
 
+    public void SetDirection (Vector3 newDirection)
+    {
+        Quaternion rotation = Quaternion.LookRotation(newDirection, new Vector3(0, 0, 0));
+        transform.rotation = rotation;
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
