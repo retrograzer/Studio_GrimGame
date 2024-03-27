@@ -8,17 +8,11 @@ public class PlayerInteraction : MonoBehaviour
     public ParticleSystem fx;
     public GameObject soulPrefab;
 
-    PlayerHealth ph;
-    PlayerAttack pa;
-    PlayerMovement pm;
-    PlayerUI pui;
+    PlayerManager pm;
 
     private void Awake()
     {
-        ph = GetComponent<PlayerHealth>();
-        pa = GetComponent<PlayerAttack>();
-        pm = GetComponent<PlayerMovement>();
-        pui = GetComponent<PlayerUI>();
+        pm = GetComponent<PlayerManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,14 +29,17 @@ public class PlayerInteraction : MonoBehaviour
         for (int i = 0; i < soulsHeld; i++)
         {
             //TODO
+            GameObject newDrop = Instantiate(soulPrefab, transform.position, Quaternion.identity);
         }
     }
 
     public void PickupSoul (int soulsGained)
     {
         soulsHeld += soulsGained;
-        pui.soulsHeldText.text = "Souls: " + soulsHeld;
+        pm.pui.soulsHeldText.text = "Souls: " + soulsHeld;
         fx.Play();
+        pm.pac.pickupSFX.clip = pm.pac.rngPickupClip[Random.Range(0, pm.pac.rngPickupClip.Length)];
+        pm.pac.pickupSFX.Play();
     }
 
     public void DepositSoulsFX (int soulsRemoved)
@@ -72,6 +69,6 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ApplyFireEffect ()
     {
-        ph.TakeDamage(1, transform.position);
+        pm.ph.TakeDamage(1, transform.position);
     }
 }

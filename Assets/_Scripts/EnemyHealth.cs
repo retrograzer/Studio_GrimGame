@@ -13,11 +13,13 @@ public class EnemyHealth : MonoBehaviour
 
     int currentHealth = 3;
     Rigidbody2D rbd;
+    AudioSource src;
 
     void Awake()
     {
         currentHealth = maxHealth;
         rbd = GetComponent<Rigidbody2D>();
+        src = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damageTaken;
         rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
+        src.Play();
         
         if (currentHealth <= 0)
         {

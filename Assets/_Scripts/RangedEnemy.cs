@@ -45,7 +45,7 @@ public class RangedEnemy : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         Vector3 direction = (player.position - firePoint.position).normalized;
         projectile.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
-        projectile.GetComponent<Projectile>().SetDirection(direction);
+        projectile.GetComponent<Projectile>().SetDirection(player.position);
         // attack animation trigger goes here
 
         // reset attack cooldown

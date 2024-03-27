@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -11,10 +12,12 @@ public class PlayerAttack : MonoBehaviour
 
     LineRenderer lr;
     bool canAttack = true;
+    PlayerManager pm;
 
     private void Awake()
     {
         lr = GetComponentInChildren<LineRenderer>();
+        pm = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -30,6 +33,9 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator SwingScythe ()
     {
         yield return new WaitForSeconds(attackStartingDelay);
+
+        //Play SFX
+        pm.pac.scytheSFX.Play();
 
         // Convert mouse position from screen space to world space
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

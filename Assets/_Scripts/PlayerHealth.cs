@@ -14,14 +14,12 @@ public class PlayerHealth : MonoBehaviour
     int currentLives = 3;
 
     bool isInvincible = false;
-    PlayerUI pui;
     EM_Manager manager;
-    Rigidbody2D rbd;
+    PlayerManager pm;
 
     private void Awake()
     {
-        pui = GetComponent<PlayerUI>();
-        rbd = GetComponent<Rigidbody2D>();
+        pm = GetComponent<PlayerManager>();
     }
 
     void Start()
@@ -35,9 +33,10 @@ public class PlayerHealth : MonoBehaviour
     {
         StartCoroutine(InvincibleTimer());
         currentHealth -= damageTaken;
-        pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        pm.pac.dmgSFX.Play();
 
-        rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
+        pm.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
 
         if (currentHealth <= 0)
         {
@@ -48,14 +47,14 @@ public class PlayerHealth : MonoBehaviour
     public void AddLife (int livesAdded)
     {
         currentLives += livesAdded;
-        pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
     }
 
     public void LoseLife(int livesLost)
     {
         currentLives -= livesLost;
         currentHealth = maxHealth;
-        pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
 
         if (currentLives <= 0)
         {
@@ -79,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
     {
         manager.DestroyAllEnemies();
         GetComponent<ComponentToggler>().ToggleComponents(false);
-        pui.gameOverCanvas.SetActive(true);
+        pm.pui.gameOverCanvas.SetActive(true);
         Destroy(gameObject);
         Debug.Log("End Game");
     }

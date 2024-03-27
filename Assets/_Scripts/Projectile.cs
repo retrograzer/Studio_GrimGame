@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Projectile : MonoBehaviour
 {
@@ -21,10 +22,11 @@ public class Projectile : MonoBehaviour
         Invoke("EnableCollision", 1f);
     }
 
-    public void SetDirection (Vector3 newDirection)
+    public void SetDirection (Vector3 target)
     {
-        Quaternion rotation = Quaternion.LookRotation(newDirection, new Vector3(0, 0, 0));
-        transform.rotation = rotation;
+        var dir = target - transform.position;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

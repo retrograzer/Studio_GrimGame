@@ -19,13 +19,14 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
 
     Rigidbody2D rb;
-
     Vector2 movement;
+    PlayerManager pm;
 
     // Start is called before the first frame update
     void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        pm = GetComponent<PlayerManager>();
+        rb = pm.rbd;
     }
 
     // Update is called once per frame
@@ -33,12 +34,25 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        if (canMove && (movement.x > 0.2 || movement.y > 0.2 || movement.y < -0.2 || movement.x < -0.2))
+        {
+            if (!pm.pac.runSFX.isPlaying)
+                pm.pac.runSFX.Play();
+        }
+        else
+        {
+            if (pm.pac.runSFX.isPlaying)
+                pm.pac.runSFX.Stop();
+        }
     }
 
     private void FixedUpdate()
     {
         if (canMove)
+        {
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        }
 
     }
 }
