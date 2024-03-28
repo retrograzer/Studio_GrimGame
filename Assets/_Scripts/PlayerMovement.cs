@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerManager pm;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         pm = GetComponent<PlayerManager>();
         rb = pm.rbd;
