@@ -7,19 +7,23 @@ public class Projectile : MonoBehaviour
 {
     public int damage = 1; // change damage
     public bool friendlyFire = true;
+    public bool isCrow = false;
+    public GameObject onHitFX;
 
     Collider2D coll;
 
     private void Awake()
     {
         coll = GetComponent<Collider2D>();
-        coll.enabled = false;
+        if (!isCrow)
+            coll.enabled = false;
     }
 
     private void Start()
     {
         Destroy(gameObject, 5);
-        Invoke("EnableCollision", 1f);
+        if (!isCrow)
+            Invoke("EnableCollision", 1f);
     }
 
     public void SetDirection (Vector3 target)
@@ -31,20 +35,35 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!isCrow)
         {
-            // inster damage logic here
-            collision.GetComponent<PlayerHealth>().TakeDamage(damage, transform.position);
+            if (collision.CompareTag("Player"))
+            {
+                // inster damage logic here
+                collision.GetComponent<PlayerHealth>().TakeDamage(damage, transform.position);
+                GameObject fx = Instantiate(onHitFX, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
 
-            Destroy(gameObject);
+            if (collision.CompareTag("Enemy") && friendlyFire)
+            {
+                collision.GetComponent<EnemyHealth>().TakeDamage(damage, transform.position);
+                GameObject fx = Instantiate(onHitFX, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
         }
-
-        if (collision.CompareTag("Enemy") && friendlyFire)
+        else
         {
-            collision.GetComponent<EnemyHealth>().TakeDamage(damage, transform.position);
-
-            Destroy(gameObject);
+            if (collision.CompareTag("Enemy"))
+            {
+                Debug.Log("HE");
+                collision.GetComponent<EnemyHealth>().TakeDamage(damage, transform.position);
+                GameObject fx = Instantiate(onHitFX, transform.position, Quaternion.identity);
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                Destroy(gameObject, 2);
+            }
         }
+        
     }
 
     void EnableCollision ()
