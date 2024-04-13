@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class HealthManager : MonoBehaviour
 {
@@ -16,6 +18,10 @@ public class HealthManager : MonoBehaviour
     public GameObject healthCanvas;
     public Transform currentCanvasPos;
 
+    public Image soulOrb;
+    public TextMeshProUGUI soulNumText;
+    public int numOfSouls = 0;
+
     private List<GameObject> imageList;
 
     // Start is called before the first frame update
@@ -28,6 +34,9 @@ public class HealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        soulNumText.text = numOfSouls.ToString();
+
+        //used for testing
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             ChangeHealth(1);
@@ -36,6 +45,16 @@ public class HealthManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ChangeHealth(-1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            SoulNumChange(-1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SoulNumChange(1);
         }
     }
 
@@ -97,4 +116,31 @@ public class HealthManager : MonoBehaviour
             imageList.Add(image);
         }
     }
+
+    public void SoulNumChange(int change)
+    {
+        if (numOfSouls + change >= 0)
+        {
+            numOfSouls += change;
+        }
+        else
+        {
+            numOfSouls = 0;
+        }
+
+        int newRed = 255 - (numOfSouls * 10);
+        if (newRed < 0)
+        {
+            newRed = 0;
+        }
+        soulOrb.color = new Color32((byte)newRed, 255, 255, 255);
+
+        int newTextColorNum = numOfSouls * 20;
+        if (newTextColorNum > 255)
+        {
+            newTextColorNum = 255;
+        }
+        soulNumText.color = new Color32((byte)newTextColorNum, (byte)newTextColorNum, (byte)newTextColorNum, 255);
+    }
+
 }
