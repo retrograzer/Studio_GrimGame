@@ -47,7 +47,11 @@ public class Projectile : MonoBehaviour
 
             if (collision.CompareTag("Enemy") && friendlyFire)
             {
-                collision.GetComponent<EnemyHealth>().TakeDamage(damage, transform.position);
+                EnemyHealth eh = collision.GetComponent<EnemyHealth>();
+                if (eh)
+                {
+                    eh.TakeDamage(1, transform.position);
+                }
                 GameObject fx = Instantiate(onHitFX, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
