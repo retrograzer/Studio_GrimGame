@@ -61,7 +61,10 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Hit " + scytheRay.collider);
             if (scytheRay.collider.tag == "Enemy")
             {
-                scytheRay.collider.GetComponent<EnemyHealth>().TakeDamage(1, transform.position);
+                EnemyManager em = scytheRay.collider.GetComponent<EnemyManager>();
+                em.eh.TakeDamage(1, transform.position);
+                em.StunEnemy(.5f);
+                em.FlashColor(Color.red, .5f);
             }
         }
 

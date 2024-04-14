@@ -11,17 +11,18 @@ public class HazardBehavior : MonoBehaviour
         cripple, //Stuns the player
         poison, //Slowly hurts player until at 1 health or finds water
         water, //cures poison
-        fire //Does 1 damage
+        fire, //Does 1 damage
+        crows //Gives 1 crow
     }
 
     public EffectType effect;
 
     float[] wearOffTimes = {3f, 2f};
-    PlayerInteraction pi;
+    PlayerManager pm;
 
     private void Start()
     {
-        pi = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteraction>();
+        pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,19 +42,23 @@ public class HazardBehavior : MonoBehaviour
         switch (effect)
         {
             case EffectType.slow:
-                pi.ApplySlowEffect();
+                pm.pi.ApplySlowEffect();
                 break;
             case EffectType.cripple:
-                pi.ApplyCrippleEffect();
+                pm.pi.ApplyCrippleEffect();
                 break;
             case EffectType.poison:
-                pi.ApplyPoisonEffect();
+                pm.pi.ApplyPoisonEffect();
                 break;
             case EffectType.water:
-                pi.ApplyWaterEffect();
+                pm.pi.ApplyWaterEffect();
                 break;
             case EffectType.fire:
-                pi.ApplyFireEffect();
+                pm.pi.ApplyFireEffect();
+                break;
+            case EffectType.crows:
+                pm.pca.AddCrows(1);
+                Destroy(gameObject);
                 break;
         }
     }

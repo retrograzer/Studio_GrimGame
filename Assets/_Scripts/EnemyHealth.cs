@@ -12,14 +12,12 @@ public class EnemyHealth : MonoBehaviour
     public float hitForce = 50f;
 
     int currentHealth = 3;
-    Rigidbody2D rbd;
-    AudioSource src;
+    EnemyManager em;
 
     void Awake()
     {
         currentHealth = maxHealth;
-        rbd = GetComponent<Rigidbody2D>();
-        src = GetComponent<AudioSource>();
+        em = GetComponent<EnemyManager>();
     }
 
     // Update is called once per frame
@@ -31,8 +29,8 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage (int damageTaken, Vector2 dmgSrc)
     {
         currentHealth -= damageTaken;
-        rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
-        src.Play();
+        em.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
+        em.src.Play();
         
         if (currentHealth <= 0)
         {
@@ -54,10 +52,5 @@ public class EnemyHealth : MonoBehaviour
         }
 
         Destroy(gameObject);
-    }
-
-    public void Stun ()
-    {
-
     }
 }

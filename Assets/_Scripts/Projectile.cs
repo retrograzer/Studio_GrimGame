@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
     {
         Destroy(gameObject, 5);
         if (!isCrow)
-            Invoke("EnableCollision", 1f);
+            Invoke("EnableCollision", .5f);
     }
 
     public void SetDirection (Vector3 target)
@@ -56,10 +56,17 @@ public class Projectile : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
-                Debug.Log("HE");
-                collision.GetComponent<EnemyHealth>().TakeDamage(damage, transform.position);
-                GameObject fx = Instantiate(onHitFX, transform.position, Quaternion.identity);
+                //Debug.Log("HE");
+
+                EnemyManager em = collision.GetComponent<EnemyManager>();
+                em.StunEnemy(3f);
+                em.FlashColor(Color.yellow, 3f);
+
+                Instantiate(onHitFX, transform.position, Quaternion.identity);
+
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                GetComponent<Collider2D>().enabled = false;
+
                 Destroy(gameObject, 2);
             }
         }

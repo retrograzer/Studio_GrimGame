@@ -93,10 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4752166414309160981}
+  - component: {fileID: -3455295986015584507}
   - component: {fileID: 2891722638684705213}
+  - component: {fileID: 4369641762606571675}
   - component: {fileID: 7087226138826087953}
   - component: {fileID: 4370235077609604022}
-  - component: {fileID: 4369641762606571675}
   - component: {fileID: 5704227074181460033}
   m_Layer: 6
   m_Name: Enemy_Ranged
@@ -121,6 +122,22 @@ Transform:
   - {fileID: 9079015771744986913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3455295986015584507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130205421171857683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9267fa09b227c441afd192c4771a36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 3
+  rbd: {fileID: 0}
+  eh: {fileID: 0}
+  src: {fileID: 0}
 --- !u!114 &2891722638684705213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +156,25 @@ MonoBehaviour:
   overrideSoulsDropped: 1
   soulsDroppedOV: 6
   hitForce: 4
+--- !u!114 &4369641762606571675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130205421171857683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb328640995d4bc44ad1a99dae53f238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  attackRange: 50
+  aggroRange: 10
+  attackRate: 1
+  projectilePrefab: {fileID: 799574207563039681, guid: f19a7f48279990a4bb3ebed25e5cb109, type: 3}
+  firePoint: {fileID: 4752166414309160981}
+  projectileSpeed: 7
 --- !u!58 &7087226138826087953
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -201,25 +237,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4369641762606571675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5130205421171857683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb328640995d4bc44ad1a99dae53f238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  attackRange: 50
-  aggroRange: 10
-  attackRate: 0.5
-  projectilePrefab: {fileID: 799574207563039681, guid: f19a7f48279990a4bb3ebed25e5cb109, type: 3}
-  firePoint: {fileID: 4752166414309160981}
-  projectileSpeed: 5
 --- !u!82 &5704227074181460033
 AudioSource:
   m_ObjectHideFlags: 0

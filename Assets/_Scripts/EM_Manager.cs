@@ -10,6 +10,7 @@ public class EM_Manager : MonoBehaviour
 {
     public Transform enemySpawnParent;
     public List<GameObject> allEnemyPrefabs = new List<GameObject>();
+    public List<GameObject> allHazardPrefabs = new List<GameObject>();
     public int enemiesSpawned = 40;
     public float safeZoneRadius = 10f;
     public float[] enemyRampUp = { 50f, 100f };
@@ -18,6 +19,7 @@ public class EM_Manager : MonoBehaviour
     public Transform enemyBox;
 
     List<GameObject> allSpawnedEnemies = new List<GameObject>();
+    List<GameObject> allSpawnedHazards = new List<GameObject>();
     Transform[] allSpawnPoints = new Transform[2];
     Transform depositDoor;
 
@@ -55,6 +57,11 @@ public class EM_Manager : MonoBehaviour
             Destroy(index);
         }
         allSpawnedEnemies.Clear();
+
+        foreach (GameObject index in allSpawnedHazards)
+            Destroy(index);
+
+        allSpawnedHazards.Clear();
     }
 
     public void StartRefreshEnemies()
@@ -65,6 +72,8 @@ public class EM_Manager : MonoBehaviour
     IEnumerator RefreshEnemies ()
     {
         //Clear out old list and enemies
+        float tempListVolume = AudioListener.volume;
+        AudioListener.volume = 0;
         DestroyAllEnemies();
 
         //Spawn all new enemies
@@ -79,17 +88,28 @@ public class EM_Manager : MonoBehaviour
             } while (IsVectorOutsideSafeZone(spawnPos) == true);
 
 
-            GameObject newClone = Instantiate(allEnemyPrefabs[GetEnemyBasedOnRange(spawnPos)], spawnPos, Quaternion.identity);
+            
             if (i % 10 == 0)
             {
+                GameObject newHazard = Instantiate(allHazardPrefabs[Random.Range(0, allHazardPrefabs.Count)], spawnPos, Quaternion.identity);
                 yield return new WaitForEndOfFrame();
+                allSpawnedHazards.Add(newHazard);
             }
-            allSpawnedEnemies.Add(newClone);
+            else
+            {
+                GameObject newClone = Instantiate(allEnemyPrefabs[GetEnemyBasedOnRange(spawnPos)], spawnPos, Quaternion.identity);
+                allSpawnedEnemies.Add(newClone);
+            }
         }
 
         //Put all the enemies under one parent to keep my heirarchy sane
         foreach (GameObject index in allSpawnedEnemies)
             index.transform.SetParent(enemyBox);
+
+        foreach (GameObject index in allSpawnedHazards)
+            index.transform.SetParent(enemyBox);
+
+        AudioListener.volume = tempListVolume;
 
         yield return new WaitForEndOfFrame();
     }

@@ -93,10 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 948979291385809078}
+  - component: {fileID: -2592746257311212591}
   - component: {fileID: 946333646509826425}
+  - component: {fileID: 2333763392232211852}
   - component: {fileID: 5897248583269108643}
   - component: {fileID: 8086919993586780596}
-  - component: {fileID: 2333763392232211852}
   - component: {fileID: 6767325720318539621}
   m_Layer: 6
   m_Name: Enemy_Melee
@@ -121,6 +122,22 @@ Transform:
   - {fileID: 2222792332027798571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2592746257311212591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730755204116978383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9267fa09b227c441afd192c4771a36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 2
+  rbd: {fileID: 0}
+  eh: {fileID: 0}
+  src: {fileID: 0}
 --- !u!114 &946333646509826425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +156,23 @@ MonoBehaviour:
   overrideSoulsDropped: 1
   soulsDroppedOV: 5
   hitForce: 2
+--- !u!114 &2333763392232211852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730755204116978383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffbc8818874b7e24fae576cbc95dbb4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  attackRange: 1.5
+  aggroRange: 10
+  attackDamage: 1
+  attackRate: 0.5
 --- !u!58 &5897248583269108643
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -201,23 +235,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2333763392232211852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8730755204116978383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffbc8818874b7e24fae576cbc95dbb4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  attackRange: 1.5
-  aggroRange: 10
-  attackDamage: 1
-  attackRate: 0.5
 --- !u!82 &6767325720318539621
 AudioSource:
   m_ObjectHideFlags: 0
@@ -228,7 +245,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
