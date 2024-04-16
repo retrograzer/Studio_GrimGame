@@ -4,45 +4,58 @@ using UnityEngine;
 
 public class ObstacleDetectionTest : MonoBehaviour
 {
-    public float speed = 2.0f; // move speed
-    public float attackRange = 5f; // attack range (change to test with both melee and ranged)
-    public float avoidanceDistance = 2f; // distance to avoid obstacles (change as needed)
-    public LayerMask obstacleLayer; // obstacle layer
+    public Transform Player;
+    public float speed = 1f;
+    public float maxSpeed = 2f;
+    public float avoidanceForceMultiplier = 5f;
+    public float raySpacing = 0.5f;
+    public LayerMask obstacleLayerMask;
 
-    private Transform player;
     private Rigidbody2D rb;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.position) < attackRange)
+        if (Player == null)
         {
-            Attack();
+            Debug.LogError("Player reference is not set in ObstacleDetectionTest script.");
+            return;
         }
-        else
-        {
-            Vector2 direction = (player.position - transform.position).normalized;
 
-            // check for obstacles
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, avoidanceDistance, obstacleLayer);
+        Vector2 playerDirection = (Player.position - (Vector3)transform.position).normalized;
+
+        RaycastHit2D[] hits = new RaycastHit2D[3];
+        Vector2 rayStart = (Vector2)transform.position + playerDirection * rb.velocity.magnitude * Time.deltaTime;
+
+        for (int i = 0; i < 3; i++)
+        {
+            Vector2 rayDirection = Quaternion.AngleAxis((i - 1) * 30f, Vector3.forward) * playerDirection;
+            hits[i] = Physics2D.Raycast(rayStart, rayDirection, raySpacing, obstacleLayerMask);
+            Debug.DrawRay(rayStart, rayDirection * raySpacing, Color.red);
+        }
+
+        Vector2 avoidanceForce = Vector2.zero;
+        foreach (RaycastHit2D hit in hits)
+        {
             if (hit.collider != null)
             {
-                // calculate perpendicular direction and choose new direction
-                Vector2 perpendicularDirection = Vector2.Perpendicular(hit.normal).normalized;
-                direction = (direction + perpendicularDirection).normalized;
+                float distanceToObstacle = Vector2.Distance(transform.position, hit.collider.transform.position);
+                float distanceToRay = Vector2.Distance(rayStart, hit.point);
+                avoidanceForce += Vector2.Lerp(playerDirection, hit.normal, distanceToRay / distanceToObstacle) * avoidanceForceMultiplier;
             }
-
-            rb.velocity = direction * speed;
         }
-    }
 
-    void Attack()
-    {
-        // attack logic goes here
+        rb.AddForce(avoidanceForce);
+
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
+        rb.velocity += playerDirection * speed * Time.deltaTime;
     }
 }
