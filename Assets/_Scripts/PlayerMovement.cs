@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
 
     public bool canMove = true;
+    public Sprite[] moveSprites;
 
-    Rigidbody2D rb;
     Vector2 movement;
     PlayerManager pm;
 
@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         pm = GetComponent<PlayerManager>();
-        rb = pm.rbd;
     }
 
     // Update is called once per frame
@@ -51,8 +50,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+            pm.rbd.MovePosition(pm.rbd.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
 
+        if (canMove)
+        {
+            if (movement.x > 0.1f)
+            {
+                pm.rend.sprite = moveSprites[3]; //Right
+                pm.rend.flipX = false;
+            }
+            else
+            {
+                pm.rend.sprite = moveSprites[1]; //Left
+                pm.rend.flipX = true;
+            }
+            if (movement.y > 0.1f)
+            {
+                pm.rend.sprite = moveSprites[2]; //Up
+                pm.rend.flipX = false;
+            }
+            else if (movement.y < 0.1f && (movement.x > -0.1f && movement.x < 0.1f))
+            {
+                pm.rend.sprite = moveSprites[0]; //Down
+                pm.rend.flipX = false;
+            }
+        }
     }
 }

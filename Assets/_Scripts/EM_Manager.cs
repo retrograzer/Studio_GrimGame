@@ -89,7 +89,7 @@ public class EM_Manager : MonoBehaviour
 
 
             
-            if (i % 10 == 0)
+            if (i % 5 == 0)
             {
                 GameObject newHazard = Instantiate(allHazardPrefabs[Random.Range(0, allHazardPrefabs.Count)], spawnPos, Quaternion.identity);
                 yield return new WaitForEndOfFrame();
@@ -131,10 +131,10 @@ public class EM_Manager : MonoBehaviour
         if (dist < enemyRampUp[0]) //0-50
             return 0;
         else if (dist < enemyRampUp[1]) //50-100
-            //return 1;
             return Random.Range(0, 2);
+        else if (dist < enemyRampUp[2])
+            return Random.Range(0, 3);
         else //100+
-            //return 2;
             return Random.Range(0, 4);
     }
 
