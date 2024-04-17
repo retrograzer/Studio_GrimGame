@@ -15,7 +15,6 @@ public class RunningEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if player comes within 100 units, enemy faces player and moves towards player
         if (Vector3.Distance(transform.position, player.position) < aggroRange) // change aggro range
         {
             Vector3 direction = transform.position - player.position;

@@ -5,10 +5,10 @@ using UnityEngine;
 public class ObstacleDetectionTest : MonoBehaviour
 {
     public Transform Player;
-    public float speed = 1f;
+    public float speed = .25f;
     public float maxSpeed = 2f;
-    public float avoidanceForceMultiplier = 5f;
-    public float raySpacing = 0.5f;
+    public float avoidanceForceMultiplier = 10f;
+    public float raySpacing = 1f;
     public LayerMask obstacleLayerMask;
 
     private Rigidbody2D rb;

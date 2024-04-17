@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 7087226138826087953}
   - component: {fileID: 4370235077609604022}
   - component: {fileID: 5704227074181460033}
+  - component: {fileID: -3584986225667465217}
   m_Layer: 6
   m_Name: Enemy_Ranged
   m_TagString: Enemy
@@ -138,6 +139,7 @@ MonoBehaviour:
   rbd: {fileID: 0}
   eh: {fileID: 0}
   src: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!114 &2891722638684705213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,13 +170,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb328640995d4bc44ad1a99dae53f238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  attackRange: 50
-  aggroRange: 10
   attackRate: 1
   projectilePrefab: {fileID: 799574207563039681, guid: f19a7f48279990a4bb3ebed25e5cb109, type: 3}
   firePoint: {fileID: 4752166414309160981}
   projectileSpeed: 7
+  speed: 2
+  attackRange: 50
+  aggroRange: 10
+  maxSpeed: 4
+  avoidanceForceMultiplier: 10
+  raySpacing: 1
 --- !u!58 &7087226138826087953
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -333,3 +338,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3584986225667465217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130205421171857683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb328640995d4bc44ad1a99dae53f238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRate: 0.5
+  projectilePrefab: {fileID: 799574207563039681, guid: f19a7f48279990a4bb3ebed25e5cb109, type: 3}
+  firePoint: {fileID: 4752166414309160981}
+  projectileSpeed: 5
+  speed: 2
+  attackRange: 1
+  aggroRange: 2
+  maxSpeed: 4
+  avoidanceForceMultiplier: 10
+  raySpacing: 1
