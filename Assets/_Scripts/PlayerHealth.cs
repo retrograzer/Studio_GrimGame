@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public Transform respawnPoint;
     public float invincibleTime = 1f;
     public float hitForce = 2;
+    public GameObject soulPickupPrefab;
 
     int currentHealth = 3;
     int currentLives = 3;
@@ -16,6 +17,7 @@ public class PlayerHealth : MonoBehaviour
     bool isInvincible = false;
     EM_Manager manager;
     PlayerManager pm;
+    List<GameObject> prevDroppedSouls = new List<GameObject>();
 
     private void Awake()
     {
@@ -31,13 +33,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage (int damageTaken, Vector2 dmgSrc)
     {
-        StartCoroutine(InvincibleTimer());
         if (!isInvincible)
         {
             currentHealth -= damageTaken;
-            pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+            //pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
             pm.pac.dmgSFX.Play();
             pm.FlashColor(Color.red, invincibleTime);
+            pm.pui.healthIcons[currentHealth].SetActive(false);
 
             //pm.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
 
@@ -45,20 +47,37 @@ public class PlayerHealth : MonoBehaviour
             {
                 LoseLife(1);
             }
+            StartCoroutine(InvincibleTimer());
         }
     }
 
     public void AddLife (int livesAdded)
     {
         currentLives += livesAdded;
-        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        pm.pui.healthText.text = "x " + currentLives;
     }
 
     public void LoseLife(int livesLost)
     {
         currentLives -= livesLost;
         currentHealth = maxHealth;
-        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+        foreach (GameObject index in pm.pui.healthIcons)
+            index.SetActive(true);
+
+        pm.pui.healthText.text = "x " + currentLives;
+        pm.pui.soulsHeldText.text = "" + 0;
+
+        foreach (GameObject index in prevDroppedSouls)
+            Destroy(index);
+
+        prevDroppedSouls.Clear();
+        for (int i = 0; i < pm.pi.soulsHeld; i++)
+        {
+            GameObject droppedSoul = Instantiate(soulPickupPrefab, transform.position, Quaternion.identity);
+            prevDroppedSouls.Add(droppedSoul);
+            droppedSoul.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)), ForceMode2D.Impulse);
+        }
+        pm.pi.soulsHeld = 0;
 
         if (currentLives <= 0)
         {
