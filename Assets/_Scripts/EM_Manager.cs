@@ -12,6 +12,7 @@ public class EM_Manager : MonoBehaviour
     public List<GameObject> allEnemyPrefabs = new List<GameObject>();
     public List<GameObject> allHazardPrefabs = new List<GameObject>();
     public int enemiesSpawned = 40;
+    public int hazardsSpawned = 40;
     public float safeZoneRadius = 10f;
     public float[] enemyRampUp = { 50f, 100f };
     public bool restartOnEscape = true;
@@ -89,16 +90,37 @@ public class EM_Manager : MonoBehaviour
 
 
             
-            if (i % 5 == 0)
+            if (i % 20 == 0)
             {
-                GameObject newHazard = Instantiate(allHazardPrefabs[Random.Range(0, allHazardPrefabs.Count)], spawnPos, Quaternion.identity);
                 yield return new WaitForEndOfFrame();
-                allSpawnedHazards.Add(newHazard);
             }
             else
             {
                 GameObject newClone = Instantiate(allEnemyPrefabs[GetEnemyBasedOnRange(spawnPos)], spawnPos, Quaternion.identity);
                 allSpawnedEnemies.Add(newClone);
+            }
+        }
+
+        for (int i = 0; i < hazardsSpawned; i++)
+        {
+            Vector2 hspawnPos = new Vector2(0, 0);
+            do
+            {
+                float hspawnX = Random.Range(allSpawnPoints[0].position.x, allSpawnPoints[1].position.x);
+                float hspawnY = Random.Range(allSpawnPoints[0].position.y, allSpawnPoints[1].position.y);
+                hspawnPos = new Vector2(hspawnX, hspawnY);
+            } while (IsVectorOutsideSafeZone(hspawnPos) == true);
+
+
+
+            if (i % 20 == 0)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            else
+            {
+                GameObject newHazard = Instantiate(allHazardPrefabs[Random.Range(0, allHazardPrefabs.Count)], hspawnPos, Quaternion.identity);
+                allSpawnedHazards.Add(newHazard);
             }
         }
 
@@ -109,9 +131,10 @@ public class EM_Manager : MonoBehaviour
         foreach (GameObject index in allSpawnedHazards)
             index.transform.SetParent(enemyBox);
 
-        AudioListener.volume = tempListVolume;
+        
 
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(2f);
+        AudioListener.volume = tempListVolume;
     }
 
     bool IsVectorOutsideSafeZone (Vector2 potential)

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/NoahTestScene.unity
     guid: 402f872b8f9c93744a48114dbe132233
+  - enabled: 1
+    path: Assets/_Scenes/EndlessModeScene.unity
+    guid: b901b2cf24c511449ac177260b80d51c
   m_configObjects: {}

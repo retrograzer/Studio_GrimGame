@@ -32,15 +32,19 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage (int damageTaken, Vector2 dmgSrc)
     {
         StartCoroutine(InvincibleTimer());
-        currentHealth -= damageTaken;
-        pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
-        pm.pac.dmgSFX.Play();
-
-        pm.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
-
-        if (currentHealth <= 0)
+        if (!isInvincible)
         {
-            LoseLife(1);
+            currentHealth -= damageTaken;
+            pm.pui.healthText.text = "Health: " + currentHealth + "\nLives: " + currentLives;
+            pm.pac.dmgSFX.Play();
+            pm.FlashColor(Color.red, invincibleTime);
+
+            //pm.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
+
+            if (currentHealth <= 0)
+            {
+                LoseLife(1);
+            }
         }
     }
 

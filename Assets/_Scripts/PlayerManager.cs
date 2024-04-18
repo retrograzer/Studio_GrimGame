@@ -28,4 +28,15 @@ public class PlayerManager : MonoBehaviour
         componentToggler = GetComponent<ComponentToggler>();
         rend = GetComponentInChildren<SpriteRenderer>();
     }
+
+    public void FlashColor(Color newColor, float duration)
+    {
+        rend.color = newColor;
+        Invoke("EndColorChange", duration);
+    }
+
+    void EndColorChange()
+    {
+        rend.color = Color.white;
+    }
 }

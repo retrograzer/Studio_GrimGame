@@ -71,6 +71,7 @@ public class ButtonScript : MonoBehaviour
     public void StartGame()
     {
         //switch to game Scene
+        SceneManager.LoadScene("EndlessModeScene");
     }
 
     public void OpenSettings()
