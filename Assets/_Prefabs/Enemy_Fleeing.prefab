@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 5736218336498694176}
   - component: {fileID: 4645959285431754976}
   - component: {fileID: 4253424871317371885}
+  - component: {fileID: -6984023630426776875}
   m_Layer: 6
   m_Name: Enemy_Fleeing
   m_TagString: Enemy
@@ -137,6 +138,8 @@ MonoBehaviour:
   enemyType: 1
   rbd: {fileID: 0}
   eh: {fileID: 0}
+  src: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!114 &1529012521061161686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,3 +330,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6984023630426776875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6622873706900223678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00480fe4e0e09e1449f56f40209e5123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  aggroRange: 5

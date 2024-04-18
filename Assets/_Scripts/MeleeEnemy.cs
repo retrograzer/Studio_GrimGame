@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour
-{ 
+{
     [Header("Movement")]
-    public float speed = 2.5f; // change speed
-    public float attackRange = 2f; // change attack range
+    public float speed = 2f; // change speed
+    public float attackRange = 1f; // change attack range
     public float aggroRange = 100f;
+    public float maxSpeed = 4f;
+    public float avoidanceForceMultiplier = 10f;
+    public float raySpacing = 1f;
+
+    private LayerMask obstacleLayerMask;
+    private Rigidbody2D rb;
 
     [Header("Attacking")]
     public int attackDamage = 1;
     public float attackRate = 0.5f;
 
-    private Transform player;
+    private Transform Player;
     private PlayerHealth ph;
     private float attackCooldown = 0f;
     private bool isAggroed = false;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        ph = player.GetComponent<PlayerHealth>();
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        ph = Player.GetComponent<PlayerHealth>();
+        obstacleLayerMask = LayerMask.GetMask("Obstacles");
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
@@ -29,18 +37,48 @@ public class MeleeEnemy : MonoBehaviour
         if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
 
-        float dist = Vector3.Distance(transform.position, player.position);
+        float dist = Vector3.Distance(transform.position, Player.position);
 
         // if player comes within 100 units, enemy faces player and moves towards player and call attack method
         if (dist < aggroRange || isAggroed) // change aggro range
         {
             isAggroed = true;
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            Vector2 playerDirection = (Player.position - (Vector3)transform.position).normalized;
 
-            if (dist < attackRange && attackCooldown <= 0)
+            RaycastHit2D[] hits = new RaycastHit2D[3];
+            Vector2 rayStart = (Vector2)transform.position + playerDirection * rb.velocity.magnitude * Time.deltaTime;
+
+            for (int i = 0; i < 3; i++)
             {
-                Attack();
+                Vector2 rayDirection = Quaternion.AngleAxis((i - 1) * 30f, Vector3.forward) * playerDirection;
+                hits[i] = Physics2D.Raycast(rayStart, rayDirection, raySpacing, obstacleLayerMask);
+                Debug.DrawRay(rayStart, rayDirection * raySpacing, Color.red);
             }
+
+            Vector2 avoidanceForce = Vector2.zero;
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider != null)
+                {
+                    float distanceToObstacle = Vector2.Distance(transform.position, hit.collider.transform.position);
+                    float distanceToRay = Vector2.Distance(rayStart, hit.point);
+                    avoidanceForce += Vector2.Lerp(playerDirection, hit.normal, distanceToRay / distanceToObstacle) * avoidanceForceMultiplier;
+                }
+            }
+
+            rb.AddForce(avoidanceForce);
+
+            if (rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = rb.velocity.normalized * maxSpeed;
+            }
+
+            rb.velocity += playerDirection * speed * Time.deltaTime;
+        }
+
+        if (dist < attackRange && attackCooldown <= 0)
+        {
+            Attack();
         }
     }
 
