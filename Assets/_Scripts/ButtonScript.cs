@@ -66,6 +66,14 @@ public class ButtonScript : MonoBehaviour
     private void Update()
     {
         AudioListener.volume = musicVolume;
+
+        if (settingsCanvas.activeSelf == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OpenMain();
+            }
+        }
     }
 
     public void StartGame()
