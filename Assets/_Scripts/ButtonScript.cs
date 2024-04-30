@@ -73,6 +73,11 @@ public class ButtonScript : MonoBehaviour
         //switch to game Scene
     }
 
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("IfranTestScene"); //replace with main menu scene if needed
+    }
+
     public void OpenSettings()
     {
         settingsCanvas.SetActive(true);
