@@ -138,7 +138,7 @@ MonoBehaviour:
   deathExplosionForce: {x: -2, y: 2}
   overrideSoulsDropped: 1
   soulsDroppedOV: 1
-  hitForce: 1
+  hitForce: 10
 --- !u!58 &1678420615920066585
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -309,3 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9267fa09b227c441afd192c4771a36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  rbd: {fileID: 0}
+  eh: {fileID: 0}
+  src: {fileID: 0}
+  rend: {fileID: 0}

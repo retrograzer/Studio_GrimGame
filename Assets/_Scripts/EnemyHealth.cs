@@ -31,6 +31,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damageTaken;
         em.rbd.AddForce(((Vector2)transform.position - dmgSrc) * hitForce, ForceMode2D.Impulse);
         em.src.Play();
+        em.FlashColor(Color.red, 0.2f);
         
         if (currentHealth <= 0)
         {

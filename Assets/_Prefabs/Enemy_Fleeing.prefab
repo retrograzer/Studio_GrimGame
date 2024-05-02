@@ -179,7 +179,7 @@ MonoBehaviour:
   deathExplosionForce: {x: -2, y: 2}
   overrideSoulsDropped: 1
   soulsDroppedOV: 2
-  hitForce: 3
+  hitForce: 10
 --- !u!58 &2585581221867247072
 CircleCollider2D:
   m_ObjectHideFlags: 0

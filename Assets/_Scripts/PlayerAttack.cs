@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public bool useRayAttack = false;
     public float attackStartingDelay = 0.25f;
     public float attackSwingDuration = 0.15f;
     public float attackDistance = 2f;
     public LayerMask attackLayer;
+    public Animator scytheAnim;
 
     LineRenderer lr;
     bool canAttack = true;
@@ -26,11 +28,21 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canAttack)
         {
             canAttack = false;
-            StartCoroutine(SwingScythe());
+            if (useRayAttack)
+                StartCoroutine(SwingScytheOld());
+            else
+                StartCoroutine(SwingScytheNew());
         }
     }
 
-    IEnumerator SwingScythe ()
+    IEnumerator SwingScytheNew()
+    {
+        scytheAnim.SetTrigger("Attack");
+        yield return new WaitForSeconds(attackStartingDelay + attackSwingDuration);
+        canAttack = true;
+    }
+
+    IEnumerator SwingScytheOld ()
     {
         yield return new WaitForSeconds(attackStartingDelay);
 
