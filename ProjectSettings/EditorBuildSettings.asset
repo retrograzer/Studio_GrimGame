@@ -9,12 +9,6 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/_Scenes/IfranTestScene.unity
-    guid: 90ea41db53a974143bfd7aff1542e47b
-  - enabled: 1
-    path: Assets/_Scenes/NoahTestScene.unity
-    guid: 402f872b8f9c93744a48114dbe132233
-  - enabled: 1
-    path: Assets/_Scenes/EndlessModeScene.unity
-    guid: b901b2cf24c511449ac177260b80d51c
+    path: Assets/_Scenes/EM_New.unity
+    guid: c14304ebf70b6a642990aea527529a1d
   m_configObjects: {}

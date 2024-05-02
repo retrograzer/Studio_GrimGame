@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackDistance = 2f;
     public LayerMask attackLayer;
     public Animator scytheAnim;
+    public int attackDamage = 1;
 
     LineRenderer lr;
     bool canAttack = true;
@@ -38,8 +39,9 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator SwingScytheNew()
     {
         scytheAnim.SetTrigger("Attack");
+        yield return new WaitForSeconds(attackStartingDelay);
         pm.pac.scytheSFX.Play();
-        yield return new WaitForSeconds(attackStartingDelay + attackSwingDuration);
+        yield return new WaitForSeconds(attackSwingDuration);
         canAttack = true;
     }
 
@@ -75,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
             if (scytheRay.collider.tag == "Enemy")
             {
                 EnemyManager em = scytheRay.collider.GetComponent<EnemyManager>();
-                em.eh.TakeDamage(1, transform.position);
+                em.eh.TakeDamage(attackDamage, transform.position);
                 em.StunEnemy(.5f);
                 em.FlashColor(Color.red, .5f);
             }

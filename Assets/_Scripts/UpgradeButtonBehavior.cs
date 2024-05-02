@@ -9,7 +9,8 @@ public class UpgradeButtonBehavior : MonoBehaviour
     {
         speed,
         lives,
-        crows
+        crows,
+        dmg
     }
 
     public UpgradeType upgrade;
@@ -49,10 +50,11 @@ public class UpgradeButtonBehavior : MonoBehaviour
         if (shopParent.CanBuyUpgrade(initCost))
         {
             shopParent.AddDepositedSouls(-initCost);
+            
             switch (upgrade)
             {
                 case UpgradeType.speed:
-                    pm.moveSpeed *= 1.1f;
+                    pm.moveSpeed *= 1.3f;
                     break;
                 case UpgradeType.lives:
                     ph.AddLife(1);
@@ -60,10 +62,16 @@ public class UpgradeButtonBehavior : MonoBehaviour
                 case UpgradeType.crows:
                     pca.AddCrows(1);
                     break;
+                case UpgradeType.dmg:
+                    pa.attackDamage++;
+                    GameObject.Find("ScytheGraphic").GetComponent<Player_ScytheDamage>().damage++;
+                    break;
             }
-            GameObject possibleCanvas = transform.parent.parent.parent.gameObject;
-            if (possibleCanvas.GetComponent<Canvas>())
-                possibleCanvas.SetActive(false);
+
+            shopParent.BuyUpgrade();
+            //GameObject possibleCanvas = transform.parent.parent.parent.gameObject;
+            //if (possibleCanvas.GetComponent<Canvas>())
+            //    possibleCanvas.SetActive(false);
         }
         else
         {

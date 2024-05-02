@@ -11,8 +11,11 @@ public class ButtonScript : MonoBehaviour
 {
     public GameObject mainCanvas;
     public GameObject settingsCanvas;
+    public Slider musicSlider;
+    public Slider sfxSlider;
 
     static float musicVolume = 1f;
+    float sfxVolume = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,8 @@ public class ButtonScript : MonoBehaviour
         {
             musicVolume = PlayerPrefs.GetFloat("volume");
         }
+
+        musicVolume = 1f;
 
         if (PlayerPrefs.HasKey("screenMode"))
         {
@@ -65,7 +70,6 @@ public class ButtonScript : MonoBehaviour
 
     private void Update()
     {
-        AudioListener.volume = musicVolume;
 
         if (settingsCanvas.activeSelf == true)
         {
@@ -79,7 +83,7 @@ public class ButtonScript : MonoBehaviour
     public void StartGame()
     {
         //switch to game Scene
-        SceneManager.LoadScene("EndlessModeScene");
+        SceneManager.LoadScene("EM_New");
     }
 
     public void ToMenu()
@@ -104,10 +108,19 @@ public class ButtonScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void UpdateVolume(float newVol)
+    public void UpdateMusicVol()
     {
-        musicVolume = newVol;
-        PlayerPrefs.SetFloat("volume", newVol);
+        musicVolume = musicSlider.value;
+        AudioListener.volume = musicVolume;
+        PlayerPrefs.SetFloat("volume", musicVolume);
+        PlayerPrefs.Save();
+    }
+
+    public void UpdateSFXVol()
+    {
+        musicVolume = musicSlider.value;
+        AudioListener.volume = musicVolume;
+        PlayerPrefs.SetFloat("volume", musicVolume);
         PlayerPrefs.Save();
     }
 

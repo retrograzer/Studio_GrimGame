@@ -432,4 +432,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgrade: 1
-  initCost: 30
+  initCost: 70

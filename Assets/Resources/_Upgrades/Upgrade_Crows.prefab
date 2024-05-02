@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgrade: 2
-  initCost: 5
+  initCost: 20
 --- !u!1 &8076027659695459941
 GameObject:
   m_ObjectHideFlags: 0

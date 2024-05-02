@@ -11,5 +11,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject gameOverCanvas;
     public Image soulOrbImg;
     public GameObject[] healthIcons;
+    public TextMeshProUGUI crowNumText;
+    public TextMeshProUGUI finalSoulText;
     //public GameObject[] lifeIcons;
 }

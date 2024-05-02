@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_ScytheDamage : MonoBehaviour
 {
+    public int damage = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class Player_ScytheDamage : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             EnemyManager em = collision.GetComponent<EnemyManager>();
-            em.eh.TakeDamage(1, transform.position);
+            em.eh.TakeDamage(damage, transform.position);
         }
     }
 }

@@ -18,11 +18,12 @@ public class ShopBehavior : MonoBehaviour
     [HideInInspector] public int soulsDeposited = 0;
 
     bool inTrigger = false;
-    bool menuActive = false;
+    [HideInInspector] public bool menuActive = false;
     ComponentToggler ct;
     Object[] allUpgrades;
     List<GameObject> spawnedButtons = new List<GameObject>();
     bool refreshOnOpen = true;
+    public EM_Manager em;
 
     private void Awake()
     {
@@ -82,6 +83,8 @@ public class ShopBehavior : MonoBehaviour
     public void BuyUpgrade ()
     {
         RefreshShopOptions();
+        ToggleMenu();
+        em.StartRefreshEnemies();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,6 +110,9 @@ public class ShopBehavior : MonoBehaviour
         soulsDeposited += soulsToAdd;
         shopSoulsNum.text = "SOULS - " + soulsDeposited;
         depositDoorNum.text = "" + soulsDeposited;
+        PlayerPrefs.SetInt("CurrentSoulNum", PlayerPrefs.GetInt("CurrentSoulNum", 0) + soulsDeposited);
+        if (PlayerPrefs.GetInt("CurrentSoulNum") > PlayerPrefs.GetInt("BestSoulNum", 0))
+            PlayerPrefs.SetInt("BestSoulNum", PlayerPrefs.GetInt("CurrentSoulNum"));
     }
 
     public IEnumerator FlashWarningText (string warning, float delay)

@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public float invincibleTime = 1f;
     public float hitForce = 2;
     public GameObject soulPickupPrefab;
+    public EM_AudioManager worldAudio;
 
     int currentHealth = 3;
     int currentLives = 3;
@@ -102,6 +103,9 @@ public class PlayerHealth : MonoBehaviour
         manager.DestroyAllEnemies();
         GetComponent<ComponentToggler>().ToggleComponents(false);
         pm.pui.gameOverCanvas.SetActive(true);
+        pm.pui.finalSoulText.text = "Souls Collected: " + PlayerPrefs.GetInt("CurrentSoulNum") + "\nBest Souls Collected: " + PlayerPrefs.GetInt("BestSoulNum");
+        PlayerPrefs.SetInt("CurrentSoulNum", 0);
+        worldAudio.FadeToMM(2f);
         Destroy(gameObject);
         Debug.Log("End Game");
     }

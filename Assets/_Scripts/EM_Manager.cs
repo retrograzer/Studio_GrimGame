@@ -74,7 +74,7 @@ public class EM_Manager : MonoBehaviour
     {
         //Clear out old list and enemies
         float tempListVolume = AudioListener.volume;
-        AudioListener.volume = 0;
+        //AudioListener.volume = 0;
         DestroyAllEnemies();
 
         //Spawn all new enemies
@@ -125,16 +125,16 @@ public class EM_Manager : MonoBehaviour
         }
 
         //Put all the enemies under one parent to keep my heirarchy sane
-        foreach (GameObject index in allSpawnedEnemies)
-            index.transform.SetParent(enemyBox);
+        //foreach (GameObject index in allSpawnedEnemies)
+        //    index.transform.SetParent(enemyBox);
 
-        foreach (GameObject index in allSpawnedHazards)
-            index.transform.SetParent(enemyBox);
+        //foreach (GameObject index in allSpawnedHazards)
+        //    index.transform.SetParent(enemyBox);
 
         
 
-        yield return new WaitForSeconds(2f);
-        AudioListener.volume = tempListVolume;
+        yield return new WaitForSeconds(1f);
+        //AudioListener.volume = tempListVolume;
     }
 
     bool IsVectorOutsideSafeZone (Vector2 potential)
@@ -156,9 +156,9 @@ public class EM_Manager : MonoBehaviour
         else if (dist < enemyRampUp[1]) //50-100
             return Random.Range(0, 2);
         else if (dist < enemyRampUp[2])
-            return Random.Range(0, 3);
+            return Random.Range(0, 5);
         else //100+
-            return Random.Range(0, 4);
+            return Random.Range(1, 6);
     }
 
     public void RestartEndlessMode ()

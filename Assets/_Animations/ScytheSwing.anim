@@ -273,7 +273,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: ScytheGraphic
+    path: ScytheGraphic/Trail
     classID: 96
     script: {fileID: 0}
     flags: 0
@@ -331,7 +331,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3488482554
+      path: 526987295
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 96
@@ -927,7 +927,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: ScytheGraphic
+    path: ScytheGraphic/Trail
     classID: 96
     script: {fileID: 0}
     flags: 0

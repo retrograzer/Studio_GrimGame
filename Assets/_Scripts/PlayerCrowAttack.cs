@@ -9,8 +9,11 @@ public class PlayerCrowAttack : MonoBehaviour
     public GameObject crowPrefab;
     public float crowSpeed = 5f;
 
+    PlayerManager pm;
+
     void Start()
     {
+        pm = GetComponent<PlayerManager>();
     }
 
     
@@ -36,6 +39,8 @@ public class PlayerCrowAttack : MonoBehaviour
         Vector3 direction = (mouseWorldPosition - transform.position).normalized;
         newCrowProj.GetComponent<Rigidbody2D>().velocity = direction * crowSpeed;
         newCrowProj.GetComponent<Projectile>().SetDirection(mouseWorldPosition);
+
+        pm.pui.crowNumText.text = "x " + crowsHeld;
     }
 
     public void AddCrows (int crowsAdded)
@@ -43,5 +48,6 @@ public class PlayerCrowAttack : MonoBehaviour
         crowsHeld += crowsAdded;
 
         Mathf.Clamp(crowsHeld, 0, maxCrowsHeld);
+        pm.pui.crowNumText.text = "x " + crowsHeld;
     }
 }
