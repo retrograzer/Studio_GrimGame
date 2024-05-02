@@ -38,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator SwingScytheNew()
     {
         scytheAnim.SetTrigger("Attack");
+        pm.pac.scytheSFX.Play();
         yield return new WaitForSeconds(attackStartingDelay + attackSwingDuration);
         canAttack = true;
     }
