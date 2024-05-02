@@ -82,6 +82,11 @@ public class ButtonScript : MonoBehaviour
         SceneManager.LoadScene("EndlessModeScene");
     }
 
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("IfranTestScene"); //replace with main menu scene if needed
+    }
+
     public void OpenSettings()
     {
         settingsCanvas.SetActive(true);
